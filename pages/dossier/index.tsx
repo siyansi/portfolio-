@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import resumeAsset from "@/assets/resume.png";
 import { Reveal, Section, SectionHeading } from "@/component/hud";
-import pointcloud2 from "@/assets/resume.png";
 
 export function Dossier() {
   return (
     <Section id="dossier">
-      <SectionHeading code="CH 06" title="Dossier" kicker="official resume" />
+      <SectionHeading code="CH 08" title="Dossier" kicker="official resume" />
       <div className="grid items-start gap-6 lg:grid-cols-[1fr_minmax(0,420px)]">
         <Reveal>
           <div className="panel-hud corner-ticks p-6 sm:p-8">
@@ -22,7 +21,7 @@ export function Dossier() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a
-                href={pointcloud2.src}
+                href={resumeAsset.src}
                 target="_blank"
                 rel="noreferrer"
                 className="border border-signal bg-signal px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.24em] text-signal-foreground transition-opacity hover:opacity-85"
@@ -30,7 +29,7 @@ export function Dossier() {
                 Open full size
               </a>
               <a
-                href={pointcloud2.src}
+                href={resumeAsset.src}
                 download="Michael-D-Barnabas-Resume.png"
                 className="border border-border px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.24em] transition-colors hover:border-signal hover:text-signal"
               >
@@ -44,20 +43,18 @@ export function Dossier() {
         </Reveal>
         <Reveal delay={0.1}>
           <motion.a
-            href={pointcloud2.src}
+            href={resumeAsset.src}
             target="_blank"
             rel="noreferrer"
             whileHover={{ rotateY: -6, rotateX: 4, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 150, damping: 16 }}
             className="panel-hud corner-ticks block overflow-hidden [transform-style:preserve-3d]"
           >
-            <Image
-              src={pointcloud2.src}
+            <img
+              src={resumeAsset.src}
               alt="Resume of Michael D Barnabas, Brand Manager and Digital Marketer"
-              width={800}
-              height={1131}
-              priority={false}
-              className="w-full h-auto"
+              loading="lazy"
+              className="w-full"
             />
           </motion.a>
         </Reveal>
@@ -66,5 +63,4 @@ export function Dossier() {
   );
 }
 
-// Added default export required by Next.js router
 export default Dossier;
