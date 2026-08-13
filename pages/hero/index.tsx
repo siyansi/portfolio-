@@ -1,263 +1,404 @@
-// "use client";
-
-// import { useRef } from "react";
-// import craft from "@/assets/craft.png";
-// import { profile } from "@/lib/data";
-// import { motion, useScroll, useTransform } from "framer-motion";
-
-// export function Hero() {
-//   const ref = useRef<HTMLDivElement>(null);
-//   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  
-//   // Motion transforms
-//   const craftX = useTransform(scrollYProgress, [0, 1], ["0%", "38%"]);
-//   const craftScale = useTransform(scrollYProgress, [0, 1], [1, 1.35]);
-//   const craftRotate = useTransform(scrollYProgress, [0, 1], [0, -8]);
-//   const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-//   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-//   // Dynamic 3D Thruster Glow Linked to Scroll
-//   const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1, 0.4]);
-//   const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
-
-//   return (
-//     <div id="top" ref={ref} className="relative min-h-[105svh] overflow-hidden">
-//       {/* 3D Spacecraft Container */}
-//       <motion.div
-//         style={{ x: craftX, scale: craftScale, rotate: craftRotate }}
-//         className="pointer-events-none absolute left-1/2 top-[26vh] w-[130vw] max-w-[1400px] -translate-x-1/2 sm:top-[22vh] sm:w-[92vw] transform-gpu will-change-transform"
-//       >
-//         <div className="relative flex items-center justify-center [perspective:1000px]">
-          
-//           {/* 3D Atmospheric Thruster Engine Glow (Guaranteed Visibility) */}
-//           <motion.div
-//             style={{ opacity: glowOpacity, scale: glowScale }}
-//             className="absolute left-1/2 top-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 transform-gpu"
-//           >
-//             {/* SVG Radial Glow Core */}
-//             <svg viewBox="0 0 800 800" className="h-full w-full opacity-90 blur-2xl">
-//               <defs>
-//                 <radialGradient id="spaceGlow" cx="50%" cy="50%" r="50%">
-//                   <stop offset="0%" stopColor="#ff1e1e" stopOpacity="0.9" />
-//                   <stop offset="35%" stopColor="#b91c1c" stopOpacity="0.6" />
-//                   <stop offset="70%" stopColor="#450a0a" stopOpacity="0.25" />
-//                   <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-//                 </radialGradient>
-//               </defs>
-//               <circle cx="400" cy="400" r="380" fill="url(#spaceGlow)" />
-//             </svg>
-//           </motion.div>
-
-//           {/* Spacecraft Image */}
-//           <img
-//             src={craft.src}
-//             alt="3D rendered crimson-lit spacecraft representing the brand ops mission"
-//             width={1280}
-//             height={768}
-//             className="animate-float-craft relative z-10 w-full opacity-90 transform-gpu"
-//           />
-//         </div>
-//       </motion.div>
-
-//       {/* Main UI & Typography Layer */}
-//       <motion.div
-//         style={{ y: titleY, opacity: fade }}
-//         className="relative mx-auto flex min-h-[105svh] w-full max-w-6xl flex-col justify-center px-5 pt-28 sm:px-8 transform-gpu will-change-transform"
-//       >
-//         <motion.p
-//           initial={{ opacity: 0, x: -20 }}
-//           animate={{ opacity: 1, x: 0 }}
-//           transition={{ duration: 0.7, delay: 0.1 }}
-//           className="label-hud"
-//         >
-//           CH 01 · Mission brief · Coimbatore, IN
-//         </motion.p>
-
-//         <h1 className="mt-4 max-w-4xl text-[13vw] font-bold leading-[0.86] sm:text-[7.4rem] [perspective:1000px]">
-//           {"MICHAEL".split("").map((c, i) => (
-//             <motion.span
-//               key={`a${i}`}
-//               initial={{ opacity: 0, y: 40, rotateX: -60 }}
-//               animate={{ opacity: 1, y: 0, rotateX: 0 }}
-//               transition={{ duration: 0.7, delay: 0.15 + i * 0.045, ease: [0.16, 1, 0.3, 1] }}
-//               className="inline-block transform-gpu will-change-transform"
-//             >
-//               {c}
-//             </motion.span>
-//           ))}
-//           <br />
-//           <span className="text-signal-glow">
-//             {"D BARNABAS".split("").map((c, i) => (
-//               <motion.span
-//                 key={`b${i}`}
-//                 initial={{ opacity: 0, y: 40, rotateX: -60 }}
-//                 animate={{ opacity: 1, y: 0, rotateX: 0 }}
-//                 transition={{ duration: 0.7, delay: 0.45 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-//                 className="inline-block transform-gpu will-change-transform"
-//               >
-//                 {c === " " ? "\u00A0" : c}
-//               </motion.span>
-//             ))}
-//           </span>
-//         </h1>
-
-//         <motion.div
-//           initial={{ opacity: 0, y: 24 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.8, delay: 0.9 }}
-//           className="mt-8 grid gap-6 md:grid-cols-[1fr_auto] md:items-end"
-//         >
-//           <div>
-//             <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
-//               {profile.role}
-//             </p>
-//             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-//               {profile.objective}
-//             </p>
-//           </div>
-//           <div className="panel-hud corner-ticks px-5 py-4">
-//             <p className="label-hud">Status</p>
-//             <p className="mt-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-signal">
-//               <span className="h-1.5 w-1.5 animate-blink-dot bg-signal" /> Available for briefs
-//             </p>
-//             <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-//               Founder · CreativeLance Marketing
-//             </p>
-//           </div>
-//         </motion.div>
-//       </motion.div>
-
-//       <div className="absolute inset-x-0 bottom-6 flex justify-center">
-//         <span className="label-hud animate-blink-dot">scroll to launch</span>
-//       </div>
-//     </div>
-//   );
-// }
-
-// // Fixed: Export default added to pass Next.js route validator
-// export default Hero;
-
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import spaceBg from "@/assets/space-bg.jpg";
-import { profile } from "@/lib/data";
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  animate,
+} from "framer-motion";
+import Image from "next/image";
 
-const EASE_SMOOTH = [0.25, 0.1, 0.25, 1.0] as const;
+import heroOne from "@/assets/ChatGPT Image Aug 12, 2026, 03_59_09 AM.png";
+import heroTwo from "@/assets/ChatGPT Image Aug 12, 2026, 04_12_55 AM.png";
+import { Reveal } from "../reveal";
+import { Stickers } from "../sticker";
 
-export function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+const stats = [
+  { value: 8, suffix: "+", label: "Years experience" },
+  { value: 75, suffix: "+", label: "Brand campaigns" },
+  { value: 2, suffix: "", label: "Media houses" },
+  { value: 4, suffix: "", label: "Languages" },
+];
+
+const marquee = [
+  { text: "Brand Building", emoji: "🚀" },
+  { text: "Cinematography", emoji: "🎥" },
+  { text: "Photography", emoji: "📸" },
+  { text: "Editing & DI", emoji: "🎬" },
+  { text: "UI / UX", emoji: "✨" },
+  { text: "Direction", emoji: "🎯" },
+  { text: "Content Writing", emoji: "✍️" },
+  { text: "Motion Graphics", emoji: "🔥" },
+  { text: "Marketing", emoji: "📈" },
+];
+
+/* -------------------------------------------------------
+   Lightweight counter
+------------------------------------------------------- */
+
+function AnimatedCounter({
+  value,
+  suffix,
+}: {
+  value: number;
+  suffix: string;
+}) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+
+  const isInView = useInView(nodeRef, {
+    once: true,
+    margin: "-50px",
+  });
+
+  useEffect(() => {
+    const node = nodeRef.current;
+
+    if (!node || !isInView) return;
+
+    const controls = animate(0, value, {
+      duration: 1.4,
+      ease: "easeOut",
+      onUpdate(current) {
+        node.textContent = Math.floor(current).toString();
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, value]);
 
   return (
-    <div id="top" ref={ref} className="relative min-h-[100svh] overflow-hidden">
-      {/* space backdrop */}
-      <motion.img
-        src={typeof spaceBg === "string" ? spaceBg : spaceBg.src}
-        alt=""
-        aria-hidden
-        width={1920}
-        height={1088}
-        style={{ y: bgY, scale: bgScale }}
-        className="absolute inset-0 h-full w-full object-cover opacity-80 transform-gpu will-change-transform"
-      />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/20" />
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-background to-transparent" />
-      <div aria-hidden className="scan-line absolute inset-0 opacity-50" />
+    <span className="font-display text-4xl font-black text-primary md:text-5xl">
+      <span ref={nodeRef}>0</span>
+      {suffix}
+    </span>
+  );
+}
 
-      <motion.div
-        style={{ y: textY }}
-        className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-center px-5 pb-24 pt-28 sm:px-8 transform-gpu will-change-transform"
-      >
-        <motion.p
-          initial={{ opacity: 0, x: -12 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: 0.05, ease: EASE_SMOOTH }}
-          className="label-hud"
+/* -------------------------------------------------------
+   HERO
+------------------------------------------------------- */
+
+export function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [hoveredMarqueeIndex, setHoveredMarqueeIndex] = useState<
+    number | null
+  >(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  /* =====================================================
+     PHASE 1: Text fade out
+  ===================================================== */
+
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.07, 0.12],
+    [1, 0.35, 0]
+  );
+
+  const textY = useTransform(
+    scrollYProgress,
+    [0, 0.12],
+    ["0px", "-70px"]
+  );
+
+  const textScale = useTransform(
+    scrollYProgress,
+    [0, 0.12],
+    [1, 0.96]
+  );
+
+  /* =====================================================
+     PHASE 2: Image 1 fades & blurs completely out
+  ===================================================== */
+
+  const heroOneBlur = useTransform(
+    scrollYProgress,
+    [0.15, 0.3, 0.42],
+    [0, 4, 16]
+  );
+
+  const heroOneScale = useTransform(
+    scrollYProgress,
+    [0.15, 0.42],
+    [1, 1.05]
+  );
+
+  // Fades out to 0 opacity before Image 2 fully shows
+  const heroOneOpacity = useTransform(
+    scrollYProgress,
+    [0.2, 0.38],
+    [1, 0]
+  );
+
+  const heroOneFilter = useTransform(
+    heroOneBlur,
+    (value) => `blur(${value}px)`
+  );
+
+  /* =====================================================
+     PHASE 3: Image 2 fades in and replaces Image 1
+  ===================================================== */
+
+  const imageTwoOpacity = useTransform(
+    scrollYProgress,
+    [0.32, 0.45, 0.55],
+    [0, 0.8, 1]
+  );
+
+  const imageTwoBlur = useTransform(
+    scrollYProgress,
+    [0.32, 0.45, 0.55],
+    [12, 4, 0]
+  );
+
+  const imageTwoScale = useTransform(
+    scrollYProgress,
+    [0.32, 0.55],
+    [1.04, 1]
+  );
+
+  const imageTwoFilter = useTransform(
+    imageTwoBlur,
+    (value) => `blur(${value}px)`
+  );
+
+  /* =====================================================
+     PHASE 4: Glass section rises
+  ===================================================== */
+
+  const glassY = useTransform(
+    scrollYProgress,
+    [0.72, 0.88, 1],
+    ["100%", "25%", "0%"]
+  );
+
+  const stageScale = useTransform(
+    scrollYProgress,
+    [0.72, 1],
+    [1, 0.94]
+  );
+
+  const glassRadius = useTransform(
+    scrollYProgress,
+    [0.72, 0.9],
+    ["3.5rem", "2rem"]
+  );
+
+  return (
+    <section
+      ref={containerRef}
+      id="top"
+      className="relative h-[500vh] w-full"
+    >
+      {/* =================================================
+          STICKY HERO VIEWPORT
+      ================================================= */}
+
+      <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-black">
+        {/* NAME / INTRO */}
+        <motion.div
+          style={{
+            opacity: textOpacity,
+            y: textY,
+            scale: textScale,
+          }}
+          className="pointer-events-none absolute left-8 top-1/2 z-40 max-w-xl -translate-y-1/2 md:left-16"
         >
-          CH 01 · Design ops · Coimbatore, IN
-        </motion.p>
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-primary">
+            [ CQP — 01 ] VISUAL ARTIST
+          </p>
 
-        <h1 className="mt-5 text-[13vw] font-bold leading-[0.86] sm:text-[7.5vw] xl:text-[6.6rem]">
-          {["MICHAEL", "D BARNABAS"].map((line, li) => (
-            <span key={line} className="block overflow-hidden">
-              <motion.span
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: "0%", opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.1 + li * 0.08, ease: EASE_SMOOTH }}
-                className={li === 1 ? "inline-block text-signal-glow transform-gpu will-change-transform" : "inline-block transform-gpu will-change-transform"}
-              >
-                {line}
-              </motion.span>
+          <h1 className="font-display text-5xl font-black uppercase leading-none tracking-tight text-white md:text-8xl">
+            Michael
+            <br />
+            <span className="italic text-primary">
+              Barnabas
             </span>
-          ))}
-        </h1>
+          </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.25, ease: EASE_SMOOTH }}
-          className="mt-7 font-mono text-[11px] uppercase tracking-[0.3em] text-accent sm:text-xs"
+          <p className="mt-6 max-w-sm font-mono text-xs uppercase tracking-[0.2em] text-white/70">
+            Brand growth · Cinematography · Editing · Product design
+          </p>
+        </motion.div>
+
+        {/* HERO IMAGE STAGE */}
+        <motion.div
+          style={{ scale: stageScale }}
+          className="relative flex h-screen w-screen items-center justify-center transform-gpu overflow-hidden"
         >
-          UI/UX Designer · Brand Manager · Marketing
-        </motion.p>
+          <div className="relative h-screen w-full overflow-hidden transform-gpu">
+            {/* IMAGE 1 (Starts 100% full screen, fades completely out) */}
+            <motion.div
+              style={{
+                filter: heroOneFilter,
+                scale: heroOneScale,
+                opacity: heroOneOpacity,
+              }}
+              className="absolute inset-0 z-10 h-full w-full transform-gpu will-change-[filter,transform,opacity]"
+            >
+              <Image
+                src={heroOne}
+                alt="Michael Barnabas"
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+            </motion.div>
 
-        <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.32, ease: EASE_SMOOTH }}
-          >
-            <p className="max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              I design brand systems and digital products that convert — pairing interface craft
-              and cinematic content with 7+ years of brand building and data-backed campaigns.
-            </p>
+            {/* IMAGE 2 (Appears on scroll and replaces Image 1) */}
+            <motion.div
+              style={{
+                opacity: imageTwoOpacity,
+                scale: imageTwoScale,
+                filter: imageTwoFilter,
+              }}
+              className="absolute inset-0 z-20 h-full w-full transform-gpu will-change-[opacity,transform,filter]"
+            >
+              <Image
+                src={heroTwo}
+                alt="Studio Showcase"
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+            </motion.div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href="#reel"
-                className="group relative overflow-hidden bg-signal px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.26em] text-signal-foreground transition-all duration-300 active:scale-95 transform-gpu"
-              >
-                <span className="relative z-10">View the work</span>
-                <span className="absolute inset-0 -translate-x-full bg-accent transition-transform duration-300 ease-out group-hover:translate-x-0" />
-              </a>
-              <a
-                href="#signal"
-                className="border border-border px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.26em] transition-colors duration-200 hover:border-signal hover:text-signal"
-              >
-                Open a signal
-              </a>
+            {/* OVERLAY */}
+            <div className="pointer-events-none absolute inset-0 z-30 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+          </div>
+        </motion.div>
+
+        {/* GLASS SECTION */}
+        <motion.div
+          style={{
+            y: glassY,
+            borderTopLeftRadius: glassRadius,
+            borderTopRightRadius: glassRadius,
+          }}
+          className="absolute inset-x-0 bottom-0 top-0 z-50 overflow-hidden border-t border-white/10 bg-background/95 pb-16 pt-20 shadow-[0_-25px_60px_rgba(0,0,0,0.75)] backdrop-blur-2xl will-change-transform"
+        >
+          <Stickers />
+
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid items-center gap-12 md:grid-cols-[1.15fr_0.85fr]">
+              {/* BIO */}
+              <div>
+                <Reveal>
+                  <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-primary backdrop-blur-md">
+                    Available for freelance
+                  </p>
+                </Reveal>
+
+                <Reveal delay={40}>
+                  <h2 className="font-display text-4xl font-semibold leading-[0.95] text-foreground md:text-6xl">
+                    Michael{" "}
+                    <span className="text-primary">
+                      Barnabas
+                    </span>
+                  </h2>
+                </Reveal>
+
+                <Reveal delay={80}>
+                  <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground md:text-base">
+                    I drive brand growth through strategic marketing, compelling storytelling and data-backed digital execution — leveraging 7+ years across brand building, cinematography, editing and product design.
+                  </p>
+                </Reveal>
+
+                <Reveal delay={120} className="mt-9 flex flex-wrap gap-4">
+                  <a
+                    href="#photography"
+                    className="group relative overflow-hidden rounded-full bg-primary px-8 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-primary-foreground transition-all duration-300 hover:shadow-[0_0_25px_rgba(var(--primary-rgb),0.5)] active:scale-95"
+                  >
+                    <span className="relative z-10">View work</span>
+                  </a>
+
+                  <a
+                    href="#contact"
+                    className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-foreground backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:bg-white/10"
+                  >
+                    Get in touch
+                  </a>
+                </Reveal>
+              </div>
+
+              {/* SHOWCASE CARD */}
+              <Reveal delay={100}>
+                <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition-all duration-500 hover:border-primary/40 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.15)]">
+                  <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-primary/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
+
+                  <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">
+                    [CQP — 01]
+                  </p>
+
+                  <h3 className="mt-2 font-display text-2xl font-bold text-foreground">
+                    Bringing Ideas To Life
+                  </h3>
+
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                    Specializing in digital experiences, cinematography, and brand systems engineered to convert.
+                  </p>
+                </div>
+              </Reveal>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.38, ease: EASE_SMOOTH }}
-            className="panel-hud corner-ticks w-full max-w-sm p-6 transform-gpu will-change-transform"
-          >
-            <p className="label-hud">Status</p>
-            <p className="mt-2 flex items-center gap-2 font-mono text-sm uppercase tracking-[0.2em] text-signal">
-              <span className="h-2 w-2 animate-blink-dot bg-signal" />
-              Available for briefs
-            </p>
-            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-              Founder · {profile.venture.name}
-            </p>
-          </motion.div>
-        </div>
-      </motion.div>
+            {/* STATS */}
+            <div className="mt-20 grid grid-cols-2 gap-8 border-t border-border/40 pt-10 md:grid-cols-4">
+              {stats.map((s, i) => (
+                <Reveal key={s.label} delay={i * 40}>
+                  <AnimatedCounter value={s.value} suffix={s.suffix} />
+                  <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    {s.label}
+                  </p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
 
-      <div className="absolute inset-x-0 bottom-6 z-20 flex flex-col items-center gap-3">
-        <span className="label-hud animate-blink-dot">scroll to launch</span>
-        <span className="h-10 w-px bg-gradient-to-b from-signal to-transparent" />
+          {/* MARQUEE */}
+          <div className="relative z-10 mt-20 w-full overflow-hidden border-y border-border/40 bg-background/50 py-10 backdrop-blur-md">
+            <div className="flex w-max animate-marquee gap-8 font-mono text-xs uppercase tracking-[0.3em] hover:[animation-play-state:paused] motion-reduce:animate-none">
+              {[...marquee, ...marquee, ...marquee, ...marquee].map((m, i) => (
+                <div
+                  key={`${m.text}-${i}`}
+                  className="group relative flex pointer-events-auto cursor-pointer items-center gap-8 whitespace-nowrap"
+                  onMouseEnter={() => setHoveredMarqueeIndex(i)}
+                  onMouseLeave={() => setHoveredMarqueeIndex(null)}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.85 }}
+                    animate={{
+                      opacity: hoveredMarqueeIndex === i ? 1 : 0,
+                      y: hoveredMarqueeIndex === i ? -36 : 8,
+                      scale: hoveredMarqueeIndex === i ? 1 : 0.85,
+                    }}
+                    transition={{ duration: 0.18 }}
+                    className="pointer-events-none absolute left-1/2 top-0 z-50 flex -translate-x-1/2 items-center justify-center rounded-full border border-primary/40 bg-primary/20 px-6 py-1 text-sm shadow-lg backdrop-blur-xl"
+                  >
+                    <span>{m.emoji}</span>
+                  </motion.div>
+
+                  <span className="text-muted-foreground transition-all duration-300 group-hover:scale-105 group-hover:text-primary group-hover:drop-shadow-[0_0_12px_rgba(var(--primary-rgb),0.8)]">
+                    {m.text}
+                  </span>
+
+                  <span className="text-primary/40 transition-colors group-hover:text-primary">
+                    /
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
 

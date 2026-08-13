@@ -1,24 +1,42 @@
 "use client";
 
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { Panel, Reveal, Section, SectionHeading } from "@/component/hud";
 import { profile } from "@/lib/data";
 
-export function Pilot() {
+import pointcloud from "@/assets/portrait.png";
+
+export default function Pilot() {
   return (
     <Section id="pilot">
       <SectionHeading code="CH 02" title="The Pilot" kicker="identity module" />
-      <div className="grid gap-6">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,300px)_1fr]">
         <Reveal>
-          <div className="panel-hud corner-ticks flex flex-wrap items-center justify-between gap-4 px-5 py-4">
-            <div>
-              <p className="font-display text-lg font-bold text-signal">{profile.name}</p>
-              <p className="label-hud mt-1">{profile.role}</p>
+          <motion.div
+            whileHover={{ rotateY: -8, rotateX: 4, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 140, damping: 16 }}
+            className="panel-hud corner-ticks [transform-style:preserve-3d]"
+          >
+            <Image
+              src={pointcloud}
+              alt={`Portrait of ${profile.name}`}
+              width={600}
+              height={800}
+              priority={false}
+              className="w-full object-cover h-auto"
+            />
+            <div className="bg-signal px-4 py-2">
+              <p className="font-display text-sm font-bold text-signal-foreground">
+                {profile.name}
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal-foreground/85">
+                {profile.role}
+              </p>
             </div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-              Founder · CreativeLance Marketing
-            </p>
-          </div>
+          </motion.div>
         </Reveal>
+
         <div className="grid gap-6">
           <Reveal delay={0.08}>
             <Panel bar="About me">
@@ -61,5 +79,3 @@ export function Pilot() {
     </Section>
   );
 }
-
-export default Pilot;
