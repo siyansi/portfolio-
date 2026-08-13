@@ -128,7 +128,7 @@ function TimelineCard({
   return (
     <div
       ref={cardRef}
-      style={{ top: `${topOffset}px` }}
+      style={{ top: `${topOffset}px`, fontFamily: 'Poppins' }}
       className="sticky z-10 my-4 w-full transform-gpu transition-all duration-300"
     >
       <motion.div

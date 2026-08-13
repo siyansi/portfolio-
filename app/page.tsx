@@ -15,7 +15,7 @@ export default function Home() {
     <>
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      <main className="page-bg relative min-h-screen text-foreground overflow-clip">
+      <main className="page-bg relative min-h-screen text-foreground overflow-clip" style={{ fontFamily: 'Poppins' }}>
         <Nav />
 
         {/* 1. Hero with Clip-Wipe & Collapsing Scroll */}

@@ -51,6 +51,8 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { IoRocketSharp } from "react-icons/io5";
+import { WiStars } from "react-icons/wi";
 
 const links = [
   { num: "01", label: "HOME", href: "#top" },
@@ -161,31 +163,32 @@ export function Nav() {
   />
 
   {/* Rocket Emoji Core Tip */}
-  <span
-    className={`relative flex items-center justify-center transition-all duration-300 ${
-      isScrolling
-        ? "scale-125 -rotate-45 drop-shadow-[0_0_12px_#ff4500]"
-        : "scale-90 rotate-0 drop-shadow-[0_0_6px_#00ffca]"
-    }`}
-  >
-    <span className="text-base select-none">🚀</span>
-  </span>
-
+ <span
+  className={`relative flex items-center justify-center transition-all duration-300 ${
+    isScrolling
+      ? "scale-125 -rotate-[-47deg] drop-shadow-[0_0_12px_#ff4500]"
+      : "scale-90 -rotate-[-47deg] drop-shadow-[0_0_6px_#00ffca]"
+  }`}
+>
+<span className="relative flex items-center justify-center">
+  <span className="text-green-500 select-none filter "><IoRocketSharp />
+</span>
+</span></span>
   {/* Orbiting Stars & Rocket Trail Sparkles while active scrolling */}
   {isScrolling && (
     <>
-      <span className="absolute -top-3 -left-3 text-[10px] text-yellow-400 animate-bounce">
-        ✨
+      {/* <span className="absolute -top-3 -left-3 text-[10px] text-green-500 animate-bounce">
+        <WiStars />
       </span>
-      <span className="absolute -bottom-3 -left-2 text-[10px] text-orange-400 animate-ping">
-        🔥
+      <span className="absolute -bottom-3 -left-2 text-[10px] text-green-500 animate-ping">
+         <WiStars />
       </span>
-      <span className="absolute -bottom-3 -right-2 text-[10px] text-accent animate-ping">
-        ⭐
-      </span>
-      <span className="absolute -top-2 -right-3 text-[8px] text-white animate-pulse">
-        🌟
-      </span>
+        <span className="absolute -bottom-3 -right-2 text-[10px] text-green-500 animate-ping">
+           <WiStars />
+        </span>
+        <span className="absolute -top-2 -right-3 text-[8px] text-green-500 animate-pulse">
+           <WiStars />
+      </span> */}
     </>
   )}
 </div>
