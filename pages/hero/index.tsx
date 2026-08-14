@@ -235,7 +235,7 @@ function HeroImage({
         priority={isFirst}
         quality={95}
         sizes="100vw"
-        className="object-cover object-center p-20 ml-28 "
+        className="object-cover object-top p-8 ml-20 "
         style={{
           objectPosition: imagePosition,
         }}
@@ -508,7 +508,7 @@ export function Hero() {
           STICKY SCREEN
       =================================================== */}
 
-      <div className="sticky top-0 h-[100svh] min-h-[870px] w-full overflow-hidden bg-black">
+      <div className="sticky top-0 h-[100svh] min-h-[1000px] w-full overflow-hidden bg-black">
         {/* =================================================
             BACKGROUND
         ================================================= */}
@@ -568,7 +568,7 @@ export function Hero() {
           style={{
             opacity: scrollIndicatorOpacity,
           }}
-          className="absolute bottom-7 left-1/2 z-[80] -translate-x-1/2"
+          className="absolute bottom-46 left-1/2 z-[80] -translate-x-1/2"
         >
           <motion.div
             animate={{
@@ -597,7 +597,7 @@ export function Hero() {
           style={{
             opacity: counterOpacity,
           }}
-          className="absolute bottom-7 right-5 z-[80] font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 sm:right-8"
+          className="absolute bottom-46 right-5 z-[80] font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 sm:right-8"
         >
           <span className="text-primary">
             01

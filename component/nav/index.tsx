@@ -52,7 +52,6 @@
 
 import { useEffect, useState, useRef } from "react";
 import { IoRocketSharp } from "react-icons/io5";
-import { WiStars } from "react-icons/wi";
 
 const links = [
   { num: "01", label: "HOME", href: "#top" },
@@ -72,11 +71,16 @@ export function Nav() {
 
     const updateScroll = () => {
       const currentScroll = window.scrollY;
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const totalHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
 
-      setSolid(currentScroll > 24);
+      // Trigger solid glass mode after scrolling down past top section
+      setSolid(currentScroll > 50);
+
       if (totalHeight > 0) {
-        setScrollPercent(Math.min(100, Math.max(0, (currentScroll / totalHeight) * 100)));
+        setScrollPercent(
+          Math.min(100, Math.max(0, (currentScroll / totalHeight) * 100))
+        );
       }
 
       // Detect active scrolling state
@@ -106,17 +110,22 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        solid ? "bg-background/90 backdrop-blur-md border-b border-border/40" : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out ${
+        solid
+          ? "bg-black/40 backdrop-blur-xl border-b border-white/10 shadow-2xl"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
-        <a href="#top" className="flex items-center gap-2.5 font-mono text-xs font-bold tracking-[0.2em]">
-          <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-          <span className="text-foreground">MICHAEL</span>
-          <span className="text-muted-foreground">/</span>
-          <span className="text-[10px] tracking-[0.25em] text-muted-foreground uppercase font-normal">
+        <a
+          href="#top"
+          className="flex items-center gap-2.5 font-mono text-xs font-bold tracking-[0.2em]"
+        >
+          <span className="h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+          <span className="text-white">MICHAEL</span>
+          <span className="text-white/40">/</span>
+          <span className="text-[10px] uppercase font-normal tracking-[0.25em] text-white/60">
             PORTFOLIO
           </span>
         </a>
@@ -127,9 +136,9 @@ export function Nav() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="group flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary"
+                className="group flex items-center gap-1.5 text-white/70 transition-colors hover:text-primary"
               >
-                <span className="text-[9px] text-muted-foreground/60 transition-colors group-hover:text-primary/70">
+                <span className="text-[9px] text-white/40 transition-colors group-hover:text-primary/70">
                   {l.num}
                 </span>
                 <span>{l.label}</span>
@@ -141,57 +150,42 @@ export function Nav() {
         {/* Action Button */}
         <a
           href="#contact"
-          className="rounded-full border border-primary/40 px-5 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground active:scale-95 transform-gpu"
+          className="rounded-full border border-primary/40 bg-primary/10 px-5 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-primary backdrop-blur-sm transition-all duration-300 hover:bg-primary hover:text-black hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] active:scale-95 transform-gpu"
         >
           Hire me
         </a>
       </nav>
 
-      {/* Interactive Progress Line & Dynamic Sparkle Rocket */}
-      <div className="relative h-[2px] w-full bg-border/20">
+      {/* Interactive Progress Line & Dynamic Rocket */}
+      <div className="relative h-[2px] w-full bg-white/10">
         <div
-          className="relative h-full bg-gradient-to-r from-primary via-accent to-primary transition-all duration-75 ease-out"
+          className="relative h-full bg-gradient-to-r from-primary via-emerald-400 to-primary transition-all duration-75 ease-out"
           style={{ width: `${scrollPercent}%` }}
         >
-          {/* Sparkle Engine Head at Tip */}
-       <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2">
-  {/* Multi-Color Dynamic Rocket Flame / Halo */}
-  <span
-    className={`absolute -inset-3 rounded-full blur-md transition-all duration-300 ${
-      isScrolling ? "scale-150 opacity-100 animate-pulse" : "scale-75 opacity-40"
-    }`}
-  />
+          {/* Rocket Tip */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2">
+            <span
+              className={`absolute -inset-3 rounded-full blur-md transition-all duration-300 ${
+                isScrolling
+                  ? "scale-150 opacity-100 bg-primary/60 animate-pulse"
+                  : "scale-75 opacity-40 bg-primary/30"
+              }`}
+            />
 
-  {/* Rocket Emoji Core Tip */}
- <span
-  className={`relative flex items-center justify-center transition-all duration-300 ${
-    isScrolling
-      ? "scale-125 -rotate-[-47deg] drop-shadow-[0_0_12px_#ff4500]"
-      : "scale-90 -rotate-[-47deg] drop-shadow-[0_0_6px_#00ffca]"
-  }`}
->
-<span className="relative flex items-center justify-center">
-  <span className="text-green-500 select-none filter "><IoRocketSharp />
-</span>
-</span></span>
-  {/* Orbiting Stars & Rocket Trail Sparkles while active scrolling */}
-  {isScrolling && (
-    <>
-      {/* <span className="absolute -top-3 -left-3 text-[10px] text-green-500 animate-bounce">
-        <WiStars />
-      </span>
-      <span className="absolute -bottom-3 -left-2 text-[10px] text-green-500 animate-ping">
-         <WiStars />
-      </span>
-        <span className="absolute -bottom-3 -right-2 text-[10px] text-green-500 animate-ping">
-           <WiStars />
-        </span>
-        <span className="absolute -top-2 -right-3 text-[8px] text-green-500 animate-pulse">
-           <WiStars />
-      </span> */}
-    </>
-  )}
-</div>
+            <span
+              className={`relative flex items-center justify-center transition-all duration-300 ${
+                isScrolling
+                  ? "scale-125 -rotate-[-47deg] drop-shadow-[0_0_12px_#10b981]"
+                  : "scale-90 -rotate-[-47deg] drop-shadow-[0_0_6px_#10b981]"
+              }`}
+            >
+              <span className="relative flex items-center justify-center">
+                <span className="text-primary select-none filter">
+                  <IoRocketSharp />
+                </span>
+              </span>
+            </span>
+          </div>
         </div>
       </div>
     </header>
