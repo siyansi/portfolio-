@@ -63,39 +63,39 @@ const stats = [
 const marquee = [
   {
     text: "Brand Building",
-    emoji: "🚀",
+    emoji: "",
   },
   {
     text: "Cinematography",
-    emoji: "🎥",
+    emoji: "",
   },
   {
     text: "Photography",
-    emoji: "📸",
+    emoji: "",
   },
   {
     text: "Editing & DI",
-    emoji: "🎬",
+    emoji: "",
   },
   {
     text: "UI / UX",
-    emoji: "✨",
+    emoji: "",
   },
   {
     text: "Direction",
-    emoji: "🎯",
+    emoji: "",
   },
   {
     text: "Content Writing",
-    emoji: "✍️",
+    emoji: "",
   },
   {
     text: "Motion Graphics",
-    emoji: "🔥",
+    emoji: "",
   },
   {
     text: "Marketing",
-    emoji: "📈",
+    emoji: "",
   },
 ];
 
